@@ -1,0 +1,205 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <!--groupId>$wso2TestProject</groupId>
+  <artifactId>$wso2TestArtifact</artifactId-->
+  <version>1.0.1</version>
+
+  <groupId>org.wso2.carbon.devicemgt-plugins</groupId>
+  <artifactId>org.wso2.carbon.device.mgt.iot.yourdevice.feature</artifactId>
+  <packaging>pom</packaging>
+  <name>WSO2 Carbon - IoT Server YOURDEVICE Feature</name>
+  <url>http://wso2.org</url>
+  <description>This feature contains the YOURDEVICE Device type specific implementations for the IoT Server</description>
+
+
+
+  <properties>
+	<carbon.p2.plugin.version>1.5.4</carbon.p2.plugin.version>
+	<carbon.kernel.version>4.4.11</carbon.kernel.version>
+	<carbon.devicemgt.version>2.0.7</carbon.devicemgt.version>
+	<orbit.h2.engine.version>1.2.140.wso2v3</orbit.h2.engine.version>
+	<carbon.devicemgt.plugins.version>3.0.5-SNAPSHOT</carbon.devicemgt.plugins.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+	    <groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <version>4.11</version>
+    </dependency>
+    <!--dependency>
+	<groupId>org.wso2.carbon.devicemgt-plugins</groupId>
+	<artifactId>org.wso2.carbon.device.mgt.iot.yourdevice.api</artifactId>
+	<type>war</type>
+     </dependency>
+     <dependency>
+	<groupId>com.h2database.wso2</groupId>
+	<artifactId>h2-database-engine</artifactId>
+        <version>${orbit.h2.engine.version}</version>
+     </dependency-->
+  </dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>src/main/resources</outputDirectory>
+							<resources>
+								<resource>
+									<directory>resources</directory>
+									<includes>
+										<include>build.properties</include>
+										<include>p2.inf</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!--plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+				    <execution>
+				        <id>unpack</id>
+				        <phase>package</phase>
+				        <goals>
+				            <goal>unpack</goal>
+				        </goals>
+				        <configuration>
+				            <artifactItems>
+						<artifactItem>
+							<groupId>org.wso2.carbon.devicemgt-plugins</groupId>
+							<artifactId>org.wso2.carbon.device.mgt.iot.yourdevice.analytics
+							</artifactId>
+							<version>${project.version}</version>
+							<type>zip</type>
+							<overWrite>true</overWrite>
+							<outputDirectory>
+								${project.build.directory}/maven-shared-archive-resources/carbonapps
+							</outputDirectory>
+							<includes>**/*</includes>
+						</artifactItem>
+				                <artifactItem>
+				                    <groupId>org.wso2.carbon.devicemgt-plugins</groupId>
+				                    <artifactId>org.wso2.carbon.device.mgt.iot.yourdevice.ui
+				                    </artifactId>
+				                    <version>${project.version}</version>
+				                    <type>zip</type>
+				                    <overWrite>true</overWrite>
+				                    <outputDirectory>
+				                        ${project.build.directory}/maven-shared-archive-resources/jaggeryapps/devicemgt
+				                    </outputDirectory>
+				                    <includes>**/*</includes>
+				                </artifactItem>
+				            </artifactItems>
+				        </configuration>
+				    </execution>
+				    <execution>
+					<id>copy-jaxrs-war</id>
+					<phase>package</phase>
+					<goals>
+						<goal>copy</goal>
+					</goals>
+					<configuration>
+						<artifactItems>
+							<artifactItem>
+								<groupId>org.wso2.carbon.devicemgt-plugins</groupId>
+								<artifactId>org.wso2.carbon.device.mgt.iot.ypurdevice.api
+								</artifactId>
+								<type>war</type>
+								<overWrite>true</overWrite>
+								<outputDirectory>${project.build.directory}/maven-shared-archive-resources/webapps/</outputDirectory>
+								<destFileName>yourdevice.war</destFileName>
+							</artifactItem>
+						</artifactItems>
+					</configuration>
+				    </execution>
+				</executions>
+			</plugin-->
+                        
+                         <!--plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						
+						<id>create-yourdevice-plugin-mgt-schema</id>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<echo message="########### Create YOURDEVICE plugin Management H2 Schema ###########" />
+								<property name="db.dir" value="target/maven-shared-archive-resources/database" />
+								<property name="userid" value="wso2carbon" />
+								<property name="password" value="wso2carbon" />
+								<property name="dbURL" value="jdbc:h2:file:${basedir}/${db.dir}/YOURDEVICEDM_DB;DB_CLOSE_ON_EXIT=FALSE" />
+
+                                                                <mkdir dir="${basedir}/${db.dir}" />
+
+								<sql driver="org.h2.Driver" url="${dbURL}" userid="${userid}" password="${password}" autocommit="true" onerror="continue">
+									<classpath refid="maven.dependency.classpath" />
+									<classpath refid="maven.compile.classpath" />
+									<classpath refid="maven.runtime.classpath" />
+
+									<fileset file="${basedir}/src/main/resources/dbscripts/h2.sql" />
+								</sql>
+								<echo message="##################### END ####################" />
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin-->
+
+			<!--plugin>
+				<groupId>org.wso2.maven</groupId>
+				<artifactId>carbon-p2-plugin</artifactId>
+				<version>${carbon.p2.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>p2-feature-generation</id>
+						<phase>package</phase>
+						<goals>
+							<goal>p2-feature-gen</goal>
+						</goals>
+						<configuration>
+							<id>org.wso2.carbon.device.mgt.iot.yourdevice</id>
+							<propertiesFile>../../../features/etc/feature.properties</propertiesFile>
+							<adviceFile>
+								<properties>
+									<propertyDef>org.wso2.carbon.p2.category.type:server</propertyDef>
+									<propertyDef>org.eclipse.equinox.p2.type.group:true</propertyDef>
+								</properties>
+							</adviceFile>
+							<importFeatures>
+								<importFeatureDef>org.wso2.carbon.core.server:${carbon.kernel.version}
+								</importFeatureDef>
+								<importFeatureDef>org.wso2.carbon.device.mgt.server:${carbon.devicemgt.version}
+								</importFeatureDef>
+							</importFeatures>
+							<includedFeatures>
+								<includedFeatureDef>
+									org.wso2.carbon.devicemgt-plugins:org.wso2.carbon.device.mgt.iot.analytics.feature:${carbon.devicemgt.plugins.version}
+								</includedFeatureDef>
+							</includedFeatures>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin-->
+
+		</plugins>
+</build>
+</project>

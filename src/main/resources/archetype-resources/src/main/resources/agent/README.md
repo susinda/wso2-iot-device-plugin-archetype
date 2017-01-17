@@ -1,0 +1,1 @@
+When enrolling a device with WSO2 IoTS you require agents, also know as intelligent agents in the world of IoT, to communicate with the device and the server. You can configure the agent and host it on a separate location or have it within WSO2 IoTS. If you are configuring the agent via WSO2 IoTS all the agent related files can be included in this directory. 

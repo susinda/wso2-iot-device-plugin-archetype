@@ -1,0 +1,15 @@
+<archetype>
+  <id>devicetype-plugin</id>
+  <resources>
+        <resource>src/main/resources/agent/README.md</resource>
+	<resource>src/main/resources/build.properties</resource>
+	<resource>src/main/resources/datasources/yourdevice-datasources.xml</resource>
+	<resource>src/main/resources/dbscripts/h2.sql</resource>
+	<resource>src/main/resources/dbscripts/mssql.sql</resource>
+	<resource>src/main/resources/dbscripts/mysql.sql</resource>
+	<resource>src/main/resources/dbscripts/oracle.sql</resource>
+	<resource>src/main/resources/dbscripts/postgresql.sql</resource>
+	<resource>src/main/resources/devicetypes/yourdevice.xml</resource>
+	<resource>src/main/resources/p2.inf</resource>
+  </resources>
+</archetype>
