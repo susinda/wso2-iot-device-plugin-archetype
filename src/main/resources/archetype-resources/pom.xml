@@ -1,13 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <!--groupId>$wso2TestProject</groupId>
-  <artifactId>$wso2TestArtifact</artifactId-->
-  <version>1.0.1</version>
 
-  <groupId>org.wso2.carbon.devicemgt-plugins</groupId>
-  <artifactId>org.wso2.carbon.device.mgt.iot.yourdevice.feature</artifactId>
+  <groupId>${groupId}</groupId>
+  <artifactId>${artifactId}</artifactId>
+  <version>${version}</version>
   <packaging>pom</packaging>
+
   <name>WSO2 Carbon - IoT Server YOURDEVICE Feature</name>
   <url>http://wso2.org</url>
   <description>This feature contains the YOURDEVICE Device type specific implementations for the IoT Server</description>
